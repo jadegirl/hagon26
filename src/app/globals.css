@@ -1,0 +1,113 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-lexend-exa), sans-serif;
+}
+
+@media print {
+  body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  table {
+    break-inside: avoid;
+  }
+
+  .print-hide {
+    display: none !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+}
+
+.print-section {
+  break-inside: avoid;
+  margin-bottom: 2.5rem;
+}
+
+.print-section h2 {
+  margin-top: 1.5rem !important;
+  margin-bottom: 0.75rem !important;
+}
+
+.clause-wage {
+  font-size: 10pt;
+  font-weight: inherit;
+  color: #000;
+}
+
+.clause-wage * {
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+}
+
+.clause-wage h2 {
+  font-weight: 700;
+}
+
+.party-table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+.party-table tr {
+  height: 52px;
+}
+
+.party-table td {
+  vertical-align: top;
+}
+
+.party-table td:first-child {
+  width: 24%;
+}
+
+.party-table td:last-child {
+  width: 76%;
+}
+
+.party-table .value-cell {
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.party-table .address-cell {
+  font-size: 0.82rem;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.annex-table th,
+.annex-table td {
+  padding: 6px;
+  font-size: 0.85rem;
+}
+
+.print-section-allow-split {
+  break-inside: auto;
+}
+
+.print-section-allow-split tr,
+.print-section-allow-split p {
+  break-inside: avoid;
+}
