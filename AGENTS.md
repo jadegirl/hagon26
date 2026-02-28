@@ -64,3 +64,7 @@
 - **품질 기준**: XamTown의 `NOTION-개발계획서.md` 수준 — 각 섹션에 구체적 수치, 이유, 대안이 포함되어야 한다.
 - **렌더링**: `react-markdown` + `remark-gfm`으로 인앱 `/devdocs` 페이지에서 탭 전환 방식으로 열람한다.
 - **비개발자 가독성**: 전문 용어에는 괄호로 쉬운 설명을 붙인다.
+
+## 13. 필수 skill 참조
+
+- 작업 시작 전 반드시 `project-architect`, `edu-domain` skill을 확인할 것
