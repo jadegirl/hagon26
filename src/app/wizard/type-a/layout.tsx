@@ -3,7 +3,7 @@
 import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-const TOTAL_STEPS = 8;
+const TOTAL_STEPS = 5;
 
 export default function WizardLayout({
   children,
@@ -16,8 +16,6 @@ export default function WizardLayout({
   
   // 현재 스텝 추출
   let currentStep = 1;
-  let isPreview = false;
-  let isComplete = false;
   let isStepPage = false;
   
   if (pathname.includes('step-')) {
@@ -26,14 +24,9 @@ export default function WizardLayout({
       currentStep = parseInt(match[1]);
     }
     isStepPage = true;
-  } else if (pathname.includes('preview')) {
-    isPreview = true;
-  } else if (pathname.includes('complete')) {
-    isComplete = true;
-    currentStep = TOTAL_STEPS;
   }
 
-  const progress = isPreview || isComplete ? 100 : (currentStep / TOTAL_STEPS) * 100;
+  const progress = (currentStep / TOTAL_STEPS) * 100;
 
   // 수동 저장 함수 (persist가 자동 저장하지만 사용자에게 피드백 제공)
   const handleManualSave = () => {
@@ -64,7 +57,7 @@ export default function WizardLayout({
             <h1 className="text-xl font-bold">학온 계약서 마법사</h1>
           </div>
           <div className="flex items-center gap-4">
-            {!isPreview && !isComplete && (
+            {isStepPage && (
               <button
                 onClick={handleManualSave}
                 className="px-3 py-1.5 text-sm bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors"
@@ -77,19 +70,9 @@ export default function WizardLayout({
                 {saveMessage}
               </span>
             )}
-            {isPreview ? (
-              <span className="text-sm text-blue-200">
-                계약서 미리보기
-              </span>
-            ) : isComplete ? (
-              <span className="text-sm text-blue-200">
-                계약서 완료
-              </span>
-            ) : (
-              <span className="text-sm text-blue-200">
-                Step {currentStep} / {TOTAL_STEPS}
-              </span>
-            )}
+            <span className="text-sm text-blue-200">
+              {isStepPage ? `Step ${currentStep} / ${TOTAL_STEPS}` : '계약서 마법사'}
+            </span>
           </div>
         </div>
       </div>

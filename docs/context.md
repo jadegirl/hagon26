@@ -16,7 +16,7 @@
 ## 핵심 기능 (MVP 기준)
 
 ### 1. 계약서 마법사 (Wizard)
-- `src/app/wizard/type-a/` — **5단계 구조로 개선 진행 중** (기존 10페이지 → 5단계)
+- `src/app/wizard/type-a/` — **5단계 구조 리팩토링 완료** (기존 10페이지 → 5단계)
 - Zustand persist로 페이지 이동 시 데이터 유지
 - 상세: `docs/07_마법사_개선안.md` 참조
 
@@ -36,9 +36,10 @@ src/
 │   ├── api/partner/     — 파트너 API (session, verify, sso, callback, cancel)
 │   ├── api/signature/   — 서명 API
 │   ├── api/pdf/         — PDF 생성 API
-│   ├── wizard/type-a/   — 계약서 마법사 (5단계 개선 중, 기존 10페이지)
+│   ├── wizard/type-a/   — 계약서 마법사 (5단계: 강사정보 → 근무조건 → 급여 → 특약 → 검토·완료)
 │   ├── partner/launch/  — 파트너 런칭 페이지
 │   ├── dashboard/       — 대시보드
+│   ├── settings/        — 학원정보 설정 (마법사에서 분리)
 │   ├── sign/[id]/       — 전자 서명
 │   ├── view/[id]/       — 계약서 조회
 │   ├── login/           — 로그인

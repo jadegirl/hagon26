@@ -6,20 +6,17 @@ interface ProgressBarProps {
 }
 
 const stepGroups = [
-  { group: 1, steps: [0, 1, 3], label: '정보 입력' },
-  { group: 2, steps: [4, 5, 6, 7], label: '급여 설정' },
-  { group: 3, steps: [8], label: '완성' },
+  { group: 1, steps: [1], label: '강사 정보' },
+  { group: 2, steps: [2, 3, 4], label: '계약 설정' },
+  { group: 3, steps: [5], label: '검토·완료' },
 ];
 
 const stepLabels: Record<number, string> = {
-  0: '학원 정보 입력',
   1: '강사 정보 입력',
-  3: '계약 기간 설정',
-  4: '근로 시간 설정',
-  5: '근로 조건 설정',
-  6: '급여 설정',
-  7: '경업금지 약정',
-  8: '최종 확인',
+  2: '근무 조건 설정',
+  3: '급여 설정',
+  4: '특약사항',
+  5: '검토 및 완료',
 };
 
 export default function ProgressBar({ currentStep, currentStepLabel }: ProgressBarProps) {

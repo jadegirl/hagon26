@@ -272,7 +272,7 @@ export default function DashboardPage() {
   };
 
   const handleRowClick = (contractId: string) => {
-    router.push(`/wizard/type-a/preview?id=${contractId}`);
+    router.push(`/view/${contractId}`);
   };
 
   const handleContinue = (contractId: string) => {
@@ -282,7 +282,7 @@ export default function DashboardPage() {
       store.setDraftId(contractId);
       store.setSourceContractStatus(contract.status);
     }
-    router.push(`/wizard/type-a/preview?id=${contractId}`);
+    router.push(`/wizard/type-a`);
   };
 
   const handleCopyLink = async (contractId: string) => {
@@ -374,7 +374,7 @@ export default function DashboardPage() {
 
   const handleDownloadPdf = (contractId: string) => {
     if (typeof window === 'undefined') return;
-    window.open(`/wizard/type-a/preview?id=${contractId}`, '_blank', 'noopener,noreferrer');
+    window.open(`/view/${contractId}`, '_blank', 'noopener,noreferrer');
   };
 
   const handleCopyCompletionLink = async (contractId: string) => {

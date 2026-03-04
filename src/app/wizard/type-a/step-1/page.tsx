@@ -13,7 +13,7 @@ export default function Step1Page() {
 
   const handleNext = () => {
     if (canGoNext) {
-      router.push('/wizard/type-a/step-3');
+      router.push('/wizard/type-a/step-2');
     }
   };
 

@@ -1,5 +1,57 @@
 # 학온(HAGON) 개발일지
 
+## 2026-03-04 (화) — 마법사 10단계 → 5단계 리팩토링
+
+### 📌 목표
+계약서 마법사를 10페이지에서 5단계로 축소하여 사용자 이탈률 개선
+
+### 📋 배경
+- UX 리서치: 멀티스텝 폼 최적 3~7단계 (Eleken, Creative Navy, NNGroup)
+- 기존 Step 3(계약유형)은 입력 0개인 빈 화면
+- 학원정보는 매번 입력할 필요 없이 설정에서 관리 가능
+- 개선안 문서: `docs/07_마법사_개선안.md` (지인 공유용)
+
+### ✅ 완료 항목
+
+#### 5단계 구조 (A안 채택)
+```
+기존 10페이지 → 5단계:
+① 강사정보 (기존 step-1)
+② 근무조건 (기존 step-4 계약기간 + step-5 근무시간 병합)
+③ 급여 (기존 step-6 이동)
+④ 특약 (기존 step-7 이동)
+⑤ 검토·완료 (기존 step-8 요약 + preview 미리보기 + complete 저장 탭 병합)
+```
+
+#### 신규 생성 파일
+- `src/app/settings/page.tsx` (294줄) — 학원정보 CRUD (기존 wizard 루트에서 분리)
+- `src/app/wizard/type-a/step-2/page.tsx` (713줄) — 계약기간 + 근무시간 병합
+- `src/app/wizard/type-a/step-5/page.tsx` (1056줄) — 요약 탭 + 미리보기 탭 + 저장/서명 액션
+
+#### 수정 파일
+- `src/app/wizard/type-a/page.tsx` — 학원정보 폼(404줄) → 게이트웨이(208줄) 변환
+- `src/app/wizard/type-a/step-1/page.tsx` — 다음 경로 step-3 → step-2
+- `src/app/wizard/type-a/step-3/page.tsx` — 기존 step-6(급여) 복사 + 네비게이션 수정
+- `src/app/wizard/type-a/step-4/page.tsx` — 기존 step-7(특약) 복사 + 네비게이션 수정
+- `src/components/wizard/ProgressBar.tsx` — 5단계 그룹/라벨 반영
+- `src/app/wizard/type-a/layout.tsx` — TOTAL_STEPS=8→5, preview/complete 분기 제거
+- `src/app/dashboard/page.tsx` — preview 경로 → /view/[id] 수정
+
+#### 삭제 디렉토리
+- `step-3/` (빈 화면), `step-6/`, `step-7/`, `step-8/`, `preview/`, `complete/`
+
+### 🔍 검증
+- `npm run build` ✅ 23페이지 전체 컴파일 + 타입 검사 통과
+- 네비게이션 흐름: gateway → step-1 → step-2 → step-3 → step-4 → step-5 확인
+- LSP 에러 0건
+
+### 💡 향후 작업
+- 기존 MVP 코드의 `<select>`, `<input type="date">` → 커스텀 컴포넌트 교체
+- `any` 타입 제거 (기존 코드)
+- 조건부 렌더링 모달 패턴 수정
+
+---
+
 ## 2026-03-04 (화) — 화면 변경이력 탭 추가
 
 ### 📌 목표
