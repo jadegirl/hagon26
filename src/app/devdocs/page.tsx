@@ -16,6 +16,7 @@ const DOC_FILES: { key: string; label: string; filename: string }[] = [
   { key: 'db', label: 'DB 설계', filename: '04_DB설계.md' },
   { key: 'checklist', label: '체크리스트', filename: '05_체크리스트.md' },
   { key: 'changelog', label: '화면 변경이력', filename: '' },
+  { key: 'wizard-improvement', label: '마법사 개선안', filename: '07_마법사_개선안.md' },
 ];
 
 export default function DevDocsPage() {
