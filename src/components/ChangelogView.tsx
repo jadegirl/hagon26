@@ -228,32 +228,37 @@ function ScreenCard({ screen }: { screen: ScreenEntry }) {
 
 /** 화면 변경이력 전체 뷰 */
 export default function ChangelogView() {
+  const [activeScreen, setActiveScreen] = useState(SCREENS[0].id);
+
+  const currentScreen = SCREENS.find((s) => s.id === activeScreen) ?? SCREENS[0];
+
   return (
-    <div className="space-y-6">
-      {/* 안내 헤더 */}
-      <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/30 dark:to-indigo-950/30 rounded-2xl border border-blue-100 dark:border-blue-900/50 p-5">
-        <h2 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-1">
-          📸 화면 변경이력
-        </h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
-          MVP 고도화 작업의 전/후 화면을 비교합니다. 각 카드의{' '}
-          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 text-xs font-medium rounded">
-            변경 전
-          </span>{' '}
-          /{' '}
-          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 bg-emerald-100 dark:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300 text-xs font-medium rounded">
-            변경 후
-          </span>{' '}
-          탭을 클릭하여 비교하세요. 이미지를 클릭하면 크게 볼 수 있습니다.
-        </p>
+    <div className="space-y-4">
+      {/* 화면 선택 탭 */}
+      <div className="flex rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden bg-white dark:bg-gray-900">
+        {SCREENS.map((screen) => {
+          const isActive = activeScreen === screen.id;
+          return (
+            <button
+              key={screen.id}
+              onClick={() => setActiveScreen(screen.id)}
+              className={`
+                flex-1 px-4 py-3 text-sm font-medium transition-colors duration-150 text-center
+                ${
+                  isActive
+                    ? 'bg-blue-600 text-white'
+                    : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200'
+                }
+              `}
+            >
+              {screen.label}
+            </button>
+          );
+        })}
       </div>
 
-      {/* 화면 카드 그리드 */}
-      <div className="grid grid-cols-1 gap-6">
-        {SCREENS.map((screen) => (
-          <ScreenCard key={screen.id} screen={screen} />
-        ))}
-      </div>
+      {/* 선택된 화면 카드 1개 */}
+      <ScreenCard key={currentScreen.id} screen={currentScreen} />
     </div>
   );
 }
