@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { RefreshCw, AlertTriangle, Users, Smartphone } from 'lucide-react';
+import { RefreshCw, AlertTriangle, Users, Smartphone, FileText } from 'lucide-react';
 
 export default function Home() {
   const [email, setEmail] = useState('');
@@ -155,6 +155,12 @@ export default function Home() {
             <nav className="hidden md:flex space-x-8 items-center">
               <a href="#features" className="text-sm text-gray-500 hover:text-gray-900 transition">기능</a>
               <a href="#pricing" className="text-sm text-gray-500 hover:text-gray-900 transition">가격</a>
+              <Link
+                href="/devdocs"
+                className="p-2 rounded-lg hover:bg-gray-100 transition-colors" title="개발문서"
+              >
+                <FileText size={18} className="text-gray-500" />
+              </Link>
               <Link
                 href="/login"
                 className="bg-hagon-blue text-white px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-hagon-navy transition"
