@@ -1,5 +1,35 @@
 # 학온(HAGON) 개발일지
 
+## 2026-03-04 (화) — 화면 변경이력 탭 추가
+
+### 📌 목표
+MVP 고도화 작업의 전/후 화면을 비교할 수 있는 '화면 변경이력' 탭을 개발문서에 추가
+
+### ✅ 완료 항목
+
+#### MVP before 스크린샷 캡쳐
+- Playwright로 현재 MVP 화면 4장 캡쳐 → `public/changelog/before/`
+  - `01-landing.png` — 랜딩 페이지 (서비스 소개, 기능, 가격표, 리뷰, CTA)
+  - `02-login.png` — 로그인 (이메일/비밀번호 폼)
+  - `03-dashboard.png` — 대시보드 (통계 카드, 계약 테이블)
+  - `04-wizard-step1.png` — 새 계약서 Step 1 (학원정보 입력)
+
+#### 화면 변경이력 UI 구현
+- `src/components/ChangelogView.tsx` 생성
+  - 화면별 카드 레이아웃 (랜딩/로그인/대시보드/마법사)
+  - 각 카드에 "변경 전 / 변경 후" 탭 전환 (파란색/초록색)
+  - "변경 후"는 아직 이미지 없으므로 placeholder 표시
+  - 라벨 뱃지 (MVP 원본 / 고도화 완료)
+  - 다크모드 완전 지원
+- `DevDocsClient.tsx` 수정 — changelog 탭일 때 마크다운 대신 ChangelogView 렌더링
+- `page.tsx` 수정 — DOC_FILES에 changelog 항목 추가, Camera 아이콘 배정
+
+### 💡 향후 작업
+- 고도화 작업 완료 시마다 해당 화면의 after 스크린샷 캡쳐 → `public/changelog/after/`
+- ChangelogView.tsx의 SCREENS 배열에 afterImage 경로 업데이트
+
+---
+
 ---
 
 ## 2026-03-04 (화) — 플로우차트 TeamPro 스타일 전면 재작성

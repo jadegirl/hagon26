@@ -8,6 +8,7 @@ import {
   Server,
   CheckSquare,
   GitBranch,
+  Camera,
   ArrowLeft,
   Menu,
   X,
@@ -18,6 +19,7 @@ import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import dynamic from 'next/dynamic';
+import ChangelogView from '@/components/ChangelogView';
 
 const MermaidBlock = dynamic(() => import('@/components/MermaidBlock'), {
   ssr: false,
@@ -48,6 +50,7 @@ const TAB_ICONS: Record<string, React.ReactNode> = {
   db: <Server size={16} />,
   checklist: <CheckSquare size={16} />,
   flowchart: <GitBranch size={16} />,
+  changelog: <Camera size={16} />,
 };
 
 /** 마크다운에서 ## 헤딩을 파싱하여 목차 생성 */
@@ -356,46 +359,50 @@ export default function DevDocsClient({ docs }: { docs: DocFile[] }) {
           className="flex-1 overflow-y-scroll h-[calc(100vh-57px)]"
         >
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <article
-              className="
-                bg-white dark:bg-gray-900
-                rounded-2xl shadow-sm
-                border border-gray-200 dark:border-gray-800
-                p-6 sm:p-8 md:p-12
-                prose prose-slate dark:prose-invert
-                prose-headings:text-gray-900 dark:prose-headings:text-gray-100
-                prose-h1:text-3xl prose-h1:font-bold
-                prose-h2:text-xl prose-h2:font-bold prose-h2:border-b prose-h2:border-gray-100 dark:prose-h2:border-gray-800 prose-h2:pb-3
-                prose-h3:text-lg prose-h3:font-semibold
-                prose-table:text-sm
-                prose-th:bg-gray-50 dark:prose-th:bg-gray-800 prose-th:px-4 prose-th:py-3
-                prose-td:px-4 prose-td:py-3
-                prose-td:border-gray-100 dark:prose-td:border-gray-800
-                prose-th:border-gray-200 dark:prose-th:border-gray-700
-                prose-a:text-blue-600 dark:prose-a:text-blue-400
-                prose-code:text-blue-600 dark:prose-code:text-blue-400
-                prose-code:bg-blue-50 dark:prose-code:bg-blue-950/30
-                prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-xs prose-code:font-mono
-                prose-code:before:content-none prose-code:after:content-none
-                prose-hr:border-gray-100 dark:prose-hr:border-gray-800
-                max-w-none
-                prose-li:marker:text-gray-400 dark:prose-li:marker:text-gray-500
-                prose-input:mr-2
-                prose-p:text-gray-700 dark:prose-p:text-gray-300
-                prose-li:text-gray-700 dark:prose-li:text-gray-300
-                prose-strong:text-gray-900 dark:prose-strong:text-gray-100
-                prose-blockquote:border-blue-200 dark:prose-blockquote:border-blue-800
-                prose-blockquote:text-gray-600 dark:prose-blockquote:text-gray-400
-                prose-pre:bg-gray-50 prose-pre:text-gray-800 dark:prose-pre:bg-gray-800/50 dark:prose-pre:text-gray-200
-              "
-            >
-              <ReactMarkdown
-                remarkPlugins={[remarkGfm]}
-                components={markdownComponents}
+            {activeTab === 'changelog' ? (
+              <ChangelogView />
+            ) : (
+              <article
+                className="
+                  bg-white dark:bg-gray-900
+                  rounded-2xl shadow-sm
+                  border border-gray-200 dark:border-gray-800
+                  p-6 sm:p-8 md:p-12
+                  prose prose-slate dark:prose-invert
+                  prose-headings:text-gray-900 dark:prose-headings:text-gray-100
+                  prose-h1:text-3xl prose-h1:font-bold
+                  prose-h2:text-xl prose-h2:font-bold prose-h2:border-b prose-h2:border-gray-100 dark:prose-h2:border-gray-800 prose-h2:pb-3
+                  prose-h3:text-lg prose-h3:font-semibold
+                  prose-table:text-sm
+                  prose-th:bg-gray-50 dark:prose-th:bg-gray-800 prose-th:px-4 prose-th:py-3
+                  prose-td:px-4 prose-td:py-3
+                  prose-td:border-gray-100 dark:prose-td:border-gray-800
+                  prose-th:border-gray-200 dark:prose-th:border-gray-700
+                  prose-a:text-blue-600 dark:prose-a:text-blue-400
+                  prose-code:text-blue-600 dark:prose-code:text-blue-400
+                  prose-code:bg-blue-50 dark:prose-code:bg-blue-950/30
+                  prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-xs prose-code:font-mono
+                  prose-code:before:content-none prose-code:after:content-none
+                  prose-hr:border-gray-100 dark:prose-hr:border-gray-800
+                  max-w-none
+                  prose-li:marker:text-gray-400 dark:prose-li:marker:text-gray-500
+                  prose-input:mr-2
+                  prose-p:text-gray-700 dark:prose-p:text-gray-300
+                  prose-li:text-gray-700 dark:prose-li:text-gray-300
+                  prose-strong:text-gray-900 dark:prose-strong:text-gray-100
+                  prose-blockquote:border-blue-200 dark:prose-blockquote:border-blue-800
+                  prose-blockquote:text-gray-600 dark:prose-blockquote:text-gray-400
+                  prose-pre:bg-gray-50 prose-pre:text-gray-800 dark:prose-pre:bg-gray-800/50 dark:prose-pre:text-gray-200
+                "
               >
-                {activeDoc?.content ?? ''}
-              </ReactMarkdown>
-            </article>
+                <ReactMarkdown
+                  remarkPlugins={[remarkGfm]}
+                  components={markdownComponents}
+                >
+                  {activeDoc?.content ?? ''}
+                </ReactMarkdown>
+              </article>
+            )}
           </div>
         </main>
       </div>
