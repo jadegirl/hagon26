@@ -266,7 +266,8 @@ export default function SettingsPage() {
             </div>
 
             {/* 저장 버튼 + 인라인 메시지 */}
-            <div className="mt-8 flex items-center gap-4">
+            <div className="mt-8 flex items-center justify-between">
+              <div className="flex items-center gap-4">
               <button
                 onClick={handleSaveAcademy}
                 disabled={!canSave || isSaving}
@@ -285,6 +286,14 @@ export default function SettingsPage() {
                   {saveMessage}
                 </span>
               )}
+            </div>
+              <button
+                onClick={() => router.push('/wizard/type-a')}
+                disabled={!canSave}
+                className="px-5 py-3 bg-[#FFD85C] text-gray-900 rounded-lg hover:bg-[#f5c84a] transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-semibold text-sm"
+              >
+                계약서 작성하러 가기 →
+              </button>
             </div>
           </div>
         )}

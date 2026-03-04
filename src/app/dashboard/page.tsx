@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { FileText } from 'lucide-react';
+import { FileText, Settings } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { useWizardStore } from '@/lib/wizard-store';
 import type { User } from '@supabase/supabase-js';
@@ -566,6 +566,12 @@ export default function DashboardPage() {
                 className="p-2 rounded-lg hover:bg-gray-100 transition-colors" title="개발문서"
               >
                 <FileText size={20} className="text-gray-500" />
+              </button>
+              <button
+                onClick={() => router.push('/settings')}
+                className="p-2 rounded-lg hover:bg-gray-100 transition-colors" title="학원 정보 설정"
+              >
+                <Settings size={20} className="text-gray-500" />
               </button>
               <button
                 onClick={handleCreateContract}
