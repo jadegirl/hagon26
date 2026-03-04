@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useWizardStore } from '@/lib/wizard-store';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { supabase } from '@/lib/supabase';
 import type { User } from '@supabase/supabase-js';
 
@@ -31,12 +31,17 @@ export default function WizardGatewayPage() {
   const setDraftId = useWizardStore((s) => s.setDraftId);
 
   const [isLoading, setIsLoading] = useState(true);
+  const [noAcademyInfo, setNoAcademyInfo] = useState(false);
   const [showResumeModal, setShowResumeModal] = useState(false);
+  const hasChecked = useRef(false);
 
   const isSigned = sourceContractStatus === 'signed' || sourceContractStatus === 'pending_signature';
 
   // 1. 세션 확인 + 학원정보 자동 조회 → store 세팅
   useEffect(() => {
+    if (hasChecked.current) return;
+    hasChecked.current = true;
+
     const checkSessionAndLoadAcademy = async () => {
       try {
         const { data: { session } } = await supabase.auth.getSession();
@@ -57,9 +62,10 @@ export default function WizardGatewayPage() {
         }
 
         if (!data) {
-          // 학원정보 없으면 설정 페이지로 이동
-          alert('학원 정보를 먼저 등록해주세요.');
-          router.push('/settings');
+          // 학원정보 없으면 안내 표시 후 설정 페이지로 이동
+          setNoAcademyInfo(true);
+          setIsLoading(false);
+          setTimeout(() => router.push('/settings'), 1500);
           return;
         }
 
@@ -198,9 +204,17 @@ export default function WizardGatewayPage() {
       {/* 로딩 중 표시 */}
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-8">
         <div className="text-center py-16">
-          <div className="text-gray-600 dark:text-gray-400">
-            {isLoading ? '학원 정보를 확인하는 중...' : '계약서 작성을 준비하는 중...'}
-          </div>
+          {noAcademyInfo ? (
+            <>
+              <div className="text-2xl mb-3">🏢</div>
+              <div className="text-gray-900 dark:text-white font-semibold mb-2">학원 정보를 먼저 등록해주세요</div>
+              <div className="text-sm text-gray-500 dark:text-gray-400">설정 페이지로 이동합니다...</div>
+            </>
+          ) : (
+            <div className="text-gray-600 dark:text-gray-400">
+              {isLoading ? '학원 정보를 확인하는 중...' : '계약서 작성을 준비하는 중...'}
+            </div>
+          )}
         </div>
       </div>
     </>
