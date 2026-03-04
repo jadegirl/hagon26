@@ -17,6 +17,17 @@ import {
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import dynamic from 'next/dynamic';
+
+const MermaidBlock = dynamic(() => import('@/components/MermaidBlock'), {
+  ssr: false,
+  loading: () => (
+    <div className="flex items-center justify-center py-8 my-4">
+      <div className="w-5 h-5 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
+      <span className="ml-2 text-sm text-gray-500 dark:text-gray-400">다이어그램 로딩 중...</span>
+    </div>
+  ),
+});
 
 interface DocFile {
   key: string;
@@ -147,15 +158,19 @@ export default function DevDocsClient({ docs }: { docs: DocFile[] }) {
     };
   }, [activeTab, headingsMap]);
 
-  /** ReactMarkdown 커스텀 컴포넌트 — 헤딩에 id 부여 */
-  const markdownComponents = useMemo(
-    () => ({
+  /** ReactMarkdown 커스텀 컴포넌트 — 헤딩에 id 부여 + Mermaid 렌더링 */
+  const markdownComponents = useMemo(() => {
+    const makeHeadingId = (children: React.ReactNode) => {
+      const text = String(children ?? '').replace(/\*\*/g, '').trim();
+      return text
+        .toLowerCase()
+        .replace(/[^\w가-힣\s-]/g, '')
+        .replace(/\s+/g, '-');
+    };
+
+    return {
       h2: ({ children, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => {
-        const text = String(children ?? '').replace(/\*\*/g, '').trim();
-        const id = text
-          .toLowerCase()
-          .replace(/[^\w가-힣\s-]/g, '')
-          .replace(/\s+/g, '-');
+        const id = makeHeadingId(children);
         return (
           <h2 id={id} className="scroll-mt-20" {...props}>
             {children}
@@ -163,20 +178,30 @@ export default function DevDocsClient({ docs }: { docs: DocFile[] }) {
         );
       },
       h3: ({ children, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => {
-        const text = String(children ?? '').replace(/\*\*/g, '').trim();
-        const id = text
-          .toLowerCase()
-          .replace(/[^\w가-힣\s-]/g, '')
-          .replace(/\s+/g, '-');
+        const id = makeHeadingId(children);
         return (
           <h3 id={id} className="scroll-mt-20" {...props}>
             {children}
           </h3>
         );
       },
-    }),
-    []
-  );
+      code({
+        className,
+        children,
+        ...props
+      }: React.HTMLAttributes<HTMLElement>) {
+        const match = /language-(\w+)/.exec(className || '');
+        if (match && match[1] === 'mermaid') {
+          return <MermaidBlock chart={String(children).replace(/\n$/, '')} />;
+        }
+        return (
+          <code className={className} {...props}>
+            {children}
+          </code>
+        );
+      },
+    };
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex flex-col">
