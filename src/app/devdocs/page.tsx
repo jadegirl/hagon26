@@ -11,6 +11,7 @@ interface DocFile {
 const DOC_FILES: { key: string; label: string; filename: string }[] = [
   { key: 'plan', label: '계획서', filename: '01_계획서.md' },
   { key: 'screen', label: '화면 구조도', filename: '02_화면구조도.md' },
+  { key: 'flowchart', label: '플로우차트', filename: '06_플로우차트.md' },
   { key: 'datamap', label: '데이터맵', filename: '03_데이터맵.md' },
   { key: 'db', label: 'DB 설계', filename: '04_DB설계.md' },
   { key: 'checklist', label: '체크리스트', filename: '05_체크리스트.md' },

@@ -7,6 +7,7 @@ import {
   Database,
   Server,
   CheckSquare,
+  GitBranch,
   ArrowLeft,
   Menu,
   X,
@@ -35,6 +36,7 @@ const TAB_ICONS: Record<string, React.ReactNode> = {
   datamap: <Database size={16} />,
   db: <Server size={16} />,
   checklist: <CheckSquare size={16} />,
+  flowchart: <GitBranch size={16} />,
 };
 
 /** 마크다운에서 ## 헤딩을 파싱하여 목차 생성 */
